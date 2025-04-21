@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>About - Hard Times Cafe</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .about-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .about-header {
+            grid-column: span 2;
+            text-align: center;
+            font-size: 2em;
+            margin-bottom: 20px;
+            border: 2px solid #000; /* Black border around the box */
+            padding: 20px; /* Space inside the box */
+            background-color: #f0f0f0; /* Light background color */
+            border-radius: 10px; /* Rounded corners */
+        }
+
+        .about-header p {
+            margin-top: 10px;
+            font-size: 0.8em; /* Smaller font size */
+            color: #333;
+            font-style: italic; /* To give it a subtle emphasis */
+        }
+
+
+        .info-box, .comment-box {
+            background-color: #a77171;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .comment-box {
+            grid-row: span 5;
+        }
+
+        .info-box h3 {
+            margin-top: 0;
+        }
+
+        .info-box + .info-box {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+          <img src="{{ url_for('static', filename='logo.jpg') }}" alt="Hard Times Cafe Logo" class="logo">
+          <div class="header-text">
+            <h1>Welcome to Hard Times Cafe</h1>
+            <p>Your comfort food destination!</p>
+          </div>
+        </div>
+    </header> 
+
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="#">Menu</a></li>
+            <li><a href="{{ url_for('about') }}">About</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <div class="about-container">
+                <div class="about-header">
+                    ABOUT US
+                    <p>Worker-owned eatery with a punk-rock atmosphere serving vegan & vegetarian fare at almost all hours.</p>
+                </div>
+
+            <div class="info-box">
+                <h3>Address</h3>
+                <p>1821 Riverside Ave, Minneapolis, MN 55454</p>
+            </div>
+
+            <div class="comment-box">
+                <h3>What Our Customers Say</h3>
+                <p>"The best vegan comfort food in the city!"</p>
+                <p>"Great vibes and even better coffee."</p>
+                <p>"Friendly staff and delicious meals every time."</p>
+            </div>
+
+            <div class="info-box">
+                <h3>Hours of Operation</h3>
+                <p>Mon–Sun: 8AM – Midnight</p>
+            </div>
+
+            <div class="info-box">
+                <h3>Phone Number</h3>
+                <p>(651) xxx-xxx</p>
+            </div>
+
+            <div class="info-box">
+                <h3>Email</h3>
+                <p>info@hardtimescafe.com</p>
+            </div>
+
+            <div class="info-box">
+                <h3>Leave a Comment</h3>
+                <form action="#" method="post">
+                    <textarea rows="4" cols="30" placeholder="Your message..."></textarea><br>
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Hard Times Cafe. All rights reserved.</p>
+    </footer>
+</body>
+</html>
