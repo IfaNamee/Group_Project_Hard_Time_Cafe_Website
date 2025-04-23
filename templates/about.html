@@ -32,7 +32,6 @@
             font-style: italic; /* To give it a subtle emphasis */
         }
 
-
         .info-box, .comment-box {
             background-color: #a77171;
             padding: 20px;
@@ -40,7 +39,7 @@
         }
 
         .comment-box {
-            grid-row: span 5;
+            grid-row: span 4;
         }
 
         .info-box h3 {
@@ -86,10 +85,20 @@
 
             <div class="comment-box">
                 <h3>What Our Customers Say</h3>
-                <p>"The best vegan comfort food in the city!"</p>
-                <p>"Great vibes and even better coffee."</p>
-                <p>"Friendly staff and delicious meals every time."</p>
-            </div>
+
+                <!-- Display all comments from database -->
+                {% for comment in comments %}
+                    <p>"{{ comment.text }}"</p>
+                {% endfor %}
+
+                <!-- Leave a comment -->
+                <h3>Leave a Comment</h3>
+                <form method="post">
+                    <textarea name="comment" rows="4" placeholder="Your message..."></textarea><br>
+                    <button type="submit">Submit</button>
+                </form>
+
+            </div>            
 
             <div class="info-box">
                 <h3>Hours of Operation</h3>
@@ -105,19 +114,29 @@
                 <h3>Email</h3>
                 <p>info@hardtimescafe.com</p>
             </div>
-
-            <div class="info-box">
-                <h3>Leave a Comment</h3>
-                <form action="#" method="post">
-                    <textarea rows="4" cols="30" placeholder="Your message..."></textarea><br>
-                    <button type="submit">Submit</button>
-                </form>
-            </div>
         </div>
     </main>
 
     <footer>
         <p>&copy; 2025 Hard Times Cafe. All rights reserved.</p>
     </footer>
+
+    <!-- JavaScript to handle form submission -->
+    <script>
+        document.getElementById("comment-form").addEventListener("submit", function(e) {
+            e.preventDefault();
+            const input = document.getElementById("comment-input");
+            const newComment = input.value.trim();
+
+            if (newComment !== "") {
+                const commentBox = document.getElementById("new-comments");
+                const p = document.createElement("p");
+                p.textContent = `"${newComment}"`;
+                commentBox.appendChild(p);
+                input.value = ""; // Clear input
+            }
+        });
+    </script>
+
 </body>
 </html>
