@@ -27,10 +27,39 @@
     </nav>
 
     <main>
-        <img src="{{ url_for('static', filename='main-dish.jpg') }}" alt="Signature Dish" class="main-image">
-        <p style="text-align: center; font-style: italic;">Try our signature melt — only at Hard Times Cafe!</p>
+        <img src="{{ url_for('static', filename='HTC.jpg') }}" alt="Hard Times Cafe Logo" class="main-image">
+        <p style="text-align: center">Serving fair trade coffee and vegan/vegetarian food since 1992. Cash only.</p>
+        <div class="carousel">
+            <button class="arrow left" onclick="prevImage()">&#8592;</button>
+            <img id="carouselImage" src="image1.jpg" alt="carousel image">
+            <button class="arrow right" onclick="nextImage()">&#8594;</button>
+          </div>
+        <p style="text-align: left;">Hours of Operation:</p>
+        <p style="text-align: left;">8:00 AM - 12:00 AM Every Day</p>
     </main>
+    <script>
+        const images = [
+        "{{ url_for('static', filename='house-image.jpg') }}",
+        "{{ url_for('static', filename='fairtrade_coffee.jpg') }}",
+        "{{ url_for('static', filename='dining-area.jpg') }}"
+        ];
+        let currentIndex = 0;
 
+        function showImage(index) {
+            const imgElement = document.getElementById("carouselImage");
+            imgElement.src = images[index];
+        }
+
+        function prevImage() {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            showImage(currentIndex);
+        }
+
+        function nextImage() {
+            currentIndex = (currentIndex + 1) % images.length;
+            showImage(currentIndex);
+        }
+    </script>
     <footer>
         <p>&copy; 2025 Hard Times Cafe. All rights reserved.</p>
     </footer>

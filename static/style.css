@@ -78,5 +78,24 @@ footer {
     border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
-
+.carousel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  .carousel img {
+    width: 300px;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  }
+  
+  .arrow {
+    font-size: 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
 
