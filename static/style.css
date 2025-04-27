@@ -15,25 +15,34 @@ header {
 
 nav {
     background-color: #b07d62;
-    padding: 10px;
-    text-align: center;
+    padding: 10px 0;
 }
 
 nav ul {
-    list-style-type: none;
+    list-style: none;
     margin: 0;
     padding: 0;
+    text-align: center;
 }
 
-nav li {
-    display: inline;
-    margin: 0 15px;
+nav ul li {
+    display: inline-block;
+    margin: 0;
 }
 
-nav a {
+nav ul li a {
     color: white;
     text-decoration: none;
-    font-weight: bold;
+    font-size: 18px;
+    padding: 8px 15px;
+    transition: 0.3s ease;
+    border-radius: 5px;
+}
+
+/* Hover effect */
+nav ul li a:hover {
+    background-color: #c35920;
+    color: #ffffff;
 }
 
 main {

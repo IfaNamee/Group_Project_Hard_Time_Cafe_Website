@@ -5,50 +5,59 @@
     <title>About - Hard Times Cafe</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <style>
+
+body {
+            background: linear-gradient(to right, #e0f7fa, #80deea); /* Gradient background */
+            font-family: Arial, sans-serif; /* Sets font for the entire page */
+            margin: 0; /* Removes default margin */
+            padding: 0; /* Removes default padding */
+        }
+
         .about-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 40px 20px;
+            display: grid; /* Uses CSS Grid for layout */
+            grid-template-columns: 1fr 1fr; /* Defines two equal-width columns */
+            gap: 20px; /* Adds space between grid items */
+            max-width: 1000px; /* Restricts maximum width of the container */
+            margin: 0 auto; /* Centers the container horizontally */
+            padding: 40px 20px; /* Adds padding inside the container */
         }
 
         .about-header {
-            grid-column: span 2;
-            text-align: center;
-            font-size: 2em;
-            margin-bottom: 20px;
-            border: 2px solid #000; /* Black border around the box */
-            padding: 20px; /* Space inside the box */
-            background-color: #f0f0f0; /* Light background color */
-            border-radius: 10px; /* Rounded corners */
+            grid-column: span 2; /* Makes the header span across both columns */
+            text-align: center; /* Centers the text */
+            font-size: 2em; /* Increases font size for the header */
+            margin-bottom: 20px; /* Adds space below the header */
+            border: 2px solid #000; /* Adds a black border around the header */
+            padding: 20px; /* Adds space inside the header */
+            background-color: #f0f0f0; /* Light gray background color */
+            border-radius: 10px; /* Rounds the corners of the border */
         }
 
         .about-header p {
-            margin-top: 10px;
-            font-size: 0.8em; /* Smaller font size */
-            color: #333;
-            font-style: italic; /* To give it a subtle emphasis */
+            margin-top: 10px; /* Adds space above the paragraph */
+            font-size: 0.8em; /* Decreases font size for the paragraph */
+            color: #333; /* Dark text color */
+            font-style: italic; /* Italicizes the paragraph */
         }
 
         .info-box, .comment-box {
-            background-color: #a77171;
-            padding: 20px;
-            border-radius: 10px;
+            background-color: #a77171; /* Sets background color for info boxes */
+            padding: 20px; /* Adds padding inside each info box */
+            border-radius: 10px; /* Rounds the corners of the boxes */
         }
 
         .comment-box {
-            grid-row: span 4;
+            grid-row: span 4; /* Makes the comment box span across multiple rows */
         }
 
         .info-box h3 {
-            margin-top: 0;
+            margin-top: 0; /* Removes top margin for headings inside info boxes */
         }
 
         .info-box + .info-box {
-            margin-top: 10px;
+            margin-top: 10px; /* Adds space between consecutive info boxes */
         }
+        
     </style>
 </head>
 <body>
@@ -64,26 +73,39 @@
 
     <nav>
         <ul>
-            <li><a href="{{ url_for('home') }}">Home</a></li>
-            <li><a href="#">Menu</a></li>
-            <li><a href="{{ url_for('about') }}">About</a></li>
-            <li><a href="#">Contact</a></li>
+            <li><a href="{{ url_for('home') }}">Home</a></li> <!-- Home link -->
+            <li><a href="#">Menu</a></li>   <!-- Placeholder link for Menu -->
+            <li><a href="{{ url_for('about') }}">About</a></li> <!-- About link -->
+            <li><a href="#">Contact</a></li>   <!-- Placeholder link for Contact -->
         </ul>
     </nav>
 
     <main>
         <div class="about-container">
-                <div class="about-header">
-                    ABOUT US
-                    <p>Worker-owned eatery with a punk-rock atmosphere serving vegan & vegetarian fare at almost all hours.</p>
-                </div>
-
-            <div class="info-box">
-                <h3>Address</h3>
-                <p>1821 Riverside Ave, Minneapolis, MN 55454</p>
+            <div class="about-header"> <!-- Main section header -->
+                ABOUT US
+                <p>Worker-owned eatery with a punk-rock atmosphere serving vegan & vegetarian fare at almost all hours.</p>
             </div>
 
-            <div class="comment-box">
+            <div class="about-header">  <!-- Goolge map for the location -->
+                    <h3>Our Location</h3>
+                    <iframe 
+                    src="https://www.google.com/maps?q=1821+Riverside+Ave,+Minneapolis,+MN+55454&output=embed" 
+                    width="100%" 
+                    height="300" 
+                    style="border:0;" 
+                    loading="lazy">
+                </iframe>
+            </div>
+            
+            <div class="info-box">  <!-- Section header for the address -->
+                <h3>Address</h3>
+                <p><a href="https://www.google.com/maps?q=1821+Riverside+Ave,+Minneapolis,+MN+55454" 
+                    target="_blank">1821 Riverside Ave, Minneapolis, MN 55454</a></p> <!-- Link to Google Maps -->
+            </div>
+            
+
+            <div class="comment-box"> <!-- Display all comments from database -->
                 <h3>What Our Customers Say</h3>
 
                 <!-- Display all comments from database -->
@@ -91,33 +113,34 @@
                     <p>"{{ comment.text }}"</p>
                 {% endfor %}
 
-                <!-- Leave a comment -->
-                <h3>Leave a Comment</h3>
+                <h3>Leave a Comment</h3> <!-- Leave a comment form -->
                 <form method="post">
-                    <textarea name="comment" rows="4" placeholder="Your message..."></textarea><br>
+                    <textarea name="comment" rows="4" maxlength="40" placeholder="Your message..."></textarea><br>
                     <button type="submit">Submit</button>
                 </form>
 
             </div>            
 
-            <div class="info-box">
+            <div class="info-box">  <!-- Section for Operation hours -->
                 <h3>Hours of Operation</h3>
                 <p>Mon–Sun: 8AM – Midnight</p>
             </div>
 
-            <div class="info-box">
+            <div class="info-box"> <!-- Section for phone number -->
                 <h3>Phone Number</h3>
                 <p>(651) xxx-xxx</p>
             </div>
 
-            <div class="info-box">
+            <div class="info-box"> <!-- Section for Email -->
                 <h3>Email</h3>
                 <p>info@hardtimescafe.com</p>
             </div>
+
         </div>
+
     </main>
 
-    <footer>
+    <footer> <!-- Footer with copyright text -->
         <p>&copy; 2025 Hard Times Cafe. All rights reserved.</p>
     </footer>
 
@@ -128,11 +151,11 @@
             const input = document.getElementById("comment-input");
             const newComment = input.value.trim();
 
-            if (newComment !== "") {
+            if (newComment !== "") {  // If there is a non-empty comment
                 const commentBox = document.getElementById("new-comments");
                 const p = document.createElement("p");
-                p.textContent = `"${newComment}"`;
-                commentBox.appendChild(p);
+                p.textContent = `"${newComment}"`; // Sets the paragraph text to the new comment
+                commentBox.appendChild(p);  // Appends the new comment to the comment box
                 input.value = ""; // Clear input
             }
         });

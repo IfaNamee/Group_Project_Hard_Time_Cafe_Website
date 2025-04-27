@@ -51,8 +51,8 @@ def about():
         # Redirect to avoid form resubmission on refresh
         return redirect(url_for('about'))
 
-    # On GET request, fetch all existing comments from the database
-    comments = Comment.query.all()
+    # On GET request, fetch the latest 10 comments, newest first
+    comments = Comment.query.order_by(Comment.id.desc()).limit(10).all()
     return render_template('about.html', comments=comments)
 
 # Start the Flask development server
