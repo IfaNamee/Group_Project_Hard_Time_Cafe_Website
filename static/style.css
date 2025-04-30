@@ -142,11 +142,13 @@ footer {
     padding: 0.3rem 0.6rem;
     border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: all 0.2s ease; /* transition all properties */
   }
 
   .remove-btn:hover {
     background-color: #ff5252;
+    transform: scale(1.05); /* add pop effect */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1) /* depth on hover */
   }
 
   /* Order Summary */
@@ -246,8 +248,25 @@ footer {
     font-weight: bold;
   }
 
+  /* Visual Validation */
+  input:valid {
+    border-color: #6b4f4f;
+  }
+  input:invalid {
+    border-color: #ff6b6b;
+  }
+
   /* MOBILE RESPONSIVENESS */
-  @
+  @media (max-width: 600px) {
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .checkout-container {
+        padding: 0 0.5rem;
+    }
+  }
 
 
 
