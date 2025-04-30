@@ -12,6 +12,27 @@ header {
     padding: 20px;
     text-align: center;
 }
+.nav-social-container {
+  position: relative;
+}
+
+.social-icons {
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  display: flex;
+  gap: 10px;
+}
+
+.social-icons img {
+  transition: transform 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.social-icons img:hover {
+  transform: scale(1.5);
+}
 
 nav {
     background-color: #b07d62;
@@ -73,8 +94,7 @@ footer {
     margin-right: 20px;
 }
 
-.header-text h1,
-.header-text p {
+.header-text h1, .header-text p {
     margin: 0;
 }
 
@@ -247,7 +267,7 @@ footer {
   }
 
   /* MOBILE RESPONSIVENESS */
-  @
+  
 
 
 

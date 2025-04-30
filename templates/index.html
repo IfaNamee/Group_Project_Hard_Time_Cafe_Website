@@ -15,16 +15,25 @@
             <p>Your comfort food destination!</p>
           </div>
         </div>
-      </header>  
+    </header>  
 
-    <nav>
-        <ul>
-            <li><a href="{{ url_for('home') }}">Home</a></li>
-            <li><a href="#">Menu</a></li>
-            <li><a href="{{ url_for('about') }}">About</a></li>
-            <li><a href="#">Contact</a></li>
-        </ul>
-    </nav>
+    <div class="nav-social-container">
+        <nav class="navbar">
+            <ul class="nav-links">
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="#">Menu</a></li>
+                <li><a href="{{ url_for('about') }}">About</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+    
+            <div class="social-icons">
+                <a href="https://www.instagram.com/hardtimescafempls/?hl=en" target="_blank">
+                    <img src="{{ url_for('static', filename='ig_icon.png') }}" alt="Instagram" style="height: 40px;"></a>
+                <a href="https://www.facebook.com/hardtimescafe/" target="_blank">
+                    <img src="{{ url_for('static', filename='fb_icon.png') }}" alt="Facebook" style="height: 40px;"></a>
+            </div>
+        </nav>
+    </div>    
 
     <main>
         <!--Main image for the webpage.  Might make smaller later-->
