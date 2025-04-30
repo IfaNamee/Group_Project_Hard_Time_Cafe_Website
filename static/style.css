@@ -108,3 +108,148 @@ footer {
     cursor: pointer;
   }
 
+  /* === CHECKOUT PAGE STYLES === */
+  .checkout-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+  }
+
+  /* cart items */
+  #cart-items {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .cart-item:last-child {
+    border-bottom: none;
+  }
+
+  .remove-btn {
+    background-color: #ff6b6b;
+    color: white;
+    border: none;
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+
+  .remove-btn:hover {
+    background-color: #ff5252;
+  }
+
+  /* Order Summary */
+  .order-summary {
+    background-color: #f9f9f9;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+  }
+
+  .order-summary h3 {
+    margin-top: 0;
+  }
+
+  /* Forms */
+
+  .payment-form, .delivery-section {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+  }
+
+  .form-group {
+    margin-bottom: 1.2rem;
+  }
+
+  .form-group label {
+    display: bock;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+
+  .form-row {
+    display: flex;
+    gap: 1rem;
+  }
+
+  form-row .form-group {
+    flex: 1;
+  }
+
+  /* Buttons */
+  .submit-btn, .delivery-btn {
+    background-color: #6b4f4f;
+    color: white;
+    border: none;
+    padding: 1rem 1.5rem;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    width: 100%;
+  }
+
+  .submit-btn:hover, .delivery-btn:hover {
+    background-color: #8a6d6d;
+  }
+
+  .submit-btn:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+
+  /* Delivery Estimate */
+  #delivery-result {
+    margin-top: 1rem;
+    padding: 1rem;
+    background-color: #f0f8ff;
+    border-radius: 4px;
+    display: none;
+  }
+
+  #busy-notice {
+    color: #d35400;
+    font-style: italic;
+  }
+
+  /* empty state */
+  #empty-cart-message {
+    text-align: center;
+    padding: 2rem;
+  }
+
+  #empty-cart-message a {
+    color: #6b4f4f;
+    font-weight: bold;
+  }
+
+  /* MOBILE RESPONSIVENESS */
+  @
+
+
+
+
+
