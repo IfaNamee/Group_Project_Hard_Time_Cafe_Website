@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Menu - Hard Times Cafe</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .about-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .about-header {
+            grid-column: span 2;
+            text-align: center;
+            font-size: 2em;
+            margin-bottom: 20px;
+            border: 2px solid #000; /* Black border around the box */
+            padding: 20px; /* Space inside the box */
+            background-color: #f0f0f0; /* Light background color */
+            border-radius: 10px; /* Rounded corners */
+        }
+
+        .about-header p {
+            margin-top: 10px;
+            font-size: 0.8em; /* Smaller font size */
+            color: #333;
+            font-style: italic; /* To give it a subtle emphasis */
+        }
+
+
+        .info-box, .comment-box {
+            background-color: #a77171;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .comment-box {
+            grid-row: span 5;
+        }
+
+        .info-box h3 {
+            margin-top: 0;
+        }
+
+        .info-box + .info-box {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="header-container">
+          <img src="{{ url_for('static', filename='logo.jpg') }}" alt="Hard Times Cafe Logo" class="logo">
+          <div class="header-text">
+            <h1>Welcome to Hard Times Cafe</h1>
+            <p>Your comfort food destination!</p>
+          </div>
+        </div>
+    </header> 
+
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('menu') }}">Menu</a></li>
+            <li><a href="{{ url_for('about') }}">About</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </nav>
+<!-- main menu content container -->
+<main>
+<div class="menu-container">
+  <h2>Our Menu</h2>
+
+  <!-- Category Navigation -->
+  <!-- creates clickable tabs to filter menu categories -->
+  <div class="category-nav">
+    <a href="#breakfast" class="category-link active">Breakfast</a>
+    <a href="#lunch" class="category-link">Lunch</a>
+    <a href="#drinks" class="category-link">Drinks</a>
+  </div>
+
+  <!-- Menu sections -->
+  <!-- dynamically generate sections for each menu category
+   Use the menu_items data passed from Flask route -->
+  {% for category, items in menu_items.items() %}
+  <section id="{{ category }}" class="menu-section">
+    <!-- category heading, converts breakfast to Breakfast -->
+    <h3>{{ category|title }}</h3>
+    <!-- Menu Items Grid - responsive grid layout for menu items -->
+    <div class="menu-grid">
+      {% for item in items %}
+      <div class="menu-item">
+        <!-- Item Image -->
+        <img src="{{ url_for('static', filename='images/' + item.image) }}" alt="{{ item.name }}">
+        <!-- Item Details Container -->
+        <div class="item-info">
+          <h4>{{ item.name }}</h4>
+          <!-- Item description -->
+          <p class="item-desc">{{ item.desc }}</p>
+          <!-- item price -->
+          <p class="item-price">${{ "%.2f"|format(item.price) }}</p>
+          
+          <!-- Add to Cart button -->
+          <!-- Data attributes store item info for JavaScript -->
+          <button class="add-to-cart"
+                  data-id="{{ item.id }}"
+                  data-name="{{ item.name }}"
+                  data-price="{{ item.price }}">Add to Order
+          </button>
+        </div>
+      </div>
+      {% endfor %} <!-- End items loop -->
+    </div>
+  </section>
+  {% endfor %} <!-- End category loop -->
+</div>
+
+<!-- Cart preview -->
+<!-- Fixed position element showing cart status -->
+<div class="cart-preview" role="status" aria-live="polite"> <!-- aria-label on buttons and role='status' on cart preview -->
+  <!-- Dynamic count updated by JavaScript -->
+  <span id="cart-count">0</span> items in cart
+  <!-- Link to checkout page -->
+  <a href="{{ url_for('checkout') }}" class="checkout-btn">Checkout</a>
+</div>
+
+<!-- JavaScript for interactive elements -->
+<!-- Loads the menu specific JS file -->
+<script src="{{ url_for('static', filename='js/menu.js') }}"></script>
+
+</main>
+<footer>
+    <p>&copy; 2025 Hard Times Cafe. All rights reserved.</p>
+</footer>
+
+    
+</body>
+</html>
