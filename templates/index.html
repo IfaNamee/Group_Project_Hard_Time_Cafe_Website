@@ -27,38 +27,55 @@
     </nav>
 
     <main>
+        <!--Main image for the webpage.  Might make smaller later-->
         <img src="{{ url_for('static', filename='HTC.jpg') }}" alt="Hard Times Cafe Logo" class="main-image">
+        <!--Brief description. TODO make longer-->
         <p style="text-align: center">Serving fair trade coffee and vegan/vegetarian food since 1992. Cash only.</p>
+        <!--Carousel of various images of the cafe-->
         <div class="carousel">
+            <!--Contains left and right arrows to cycle through images.  Also cycles on its own-->
             <button class="arrow left" onclick="prevImage()">&#8592;</button>
-            <img id="carouselImage" src="image1.jpg" alt="carousel image">
+            <img id="carouselImage" src="{{ url_for('static', filename='house-image.jpg') }}" alt="carousel image">
             <button class="arrow right" onclick="nextImage()">&#8594;</button>
           </div>
+          <!--TODO add more information on the bottom page-->
         <p style="text-align: left;">Hours of Operation:</p>
         <p style="text-align: left;">8:00 AM - 12:00 AM Every Day</p>
     </main>
     <script>
+        //Loads the first image whenever the webpage is loaded
+        window.onload = () => {
+            showImage(0);
+        };
+        //Images our carousel uses
         const images = [
         "{{ url_for('static', filename='house-image.jpg') }}",
         "{{ url_for('static', filename='fairtrade_coffee.jpg') }}",
         "{{ url_for('static', filename='dining-area.jpg') }}"
         ];
         let currentIndex = 0;
-
+        //Current image being used
         function showImage(index) {
             const imgElement = document.getElementById("carouselImage");
             imgElement.src = images[index];
         }
-
+        //Gives function to back button
         function prevImage() {
             currentIndex = (currentIndex - 1 + images.length) % images.length;
             showImage(currentIndex);
         }
-
+        //Gives function to forward button
         function nextImage() {
             currentIndex = (currentIndex + 1) % images.length;
             showImage(currentIndex);
         }
+        // Change image every 3 seconds
+        window.onload = () => {
+        showImage(currentIndex);
+        setInterval(() => {
+            nextImage();
+        }, 3000);
+    };
     </script>
     <footer>
         <p>&copy; 2025 Hard Times Cafe. All rights reserved.</p>
