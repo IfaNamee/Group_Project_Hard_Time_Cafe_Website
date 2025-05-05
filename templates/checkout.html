@@ -105,7 +105,8 @@
 
             <!-- PAYMENT SECTION -->
             <section class="payment-section">
-                <form id="checkout-form" class="payment-form">
+                <form id="checkout-form" class="payment-form" method="POST"> <!-- CSRF -->
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"> <!-- CSRF -->
                     <h3><i class="fas fa-credit-card"></i> Payment Information</h3>
 
                     <div class="form-group">
