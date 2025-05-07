@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hard Times Cafe</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            background: linear-gradient(to right, #e0f7fa, #80deea); /* Gradient background */
+            font-family: Arial, sans-serif; /* Sets font for the entire page */
+            margin: 0; /* Removes default margin */
+            padding: 0; /* Removes default padding */
+        }
+
+        .menu-item{
+            grid-column: span 2; /* Makes the header span across both columns */
+            text-align: center; /* Centers the text */
+            margin-bottom: 20px; /* Adds space below the header */
+            border: 2px solid #000; /* Adds a black border around the header */
+            padding: 20px; /* Adds space inside the header */
+            background-color: #f0f0f0; /* Light gray background color */
+            border-radius: 10px; /* Rounds the corners of the border */
+        }
+
+        .button{
+            padding: 15px 32px;
+            background-color: #a77171;
+            margin-bottom: 20px;
+        }
+
+        
+        
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+          <img src="{{ url_for('static', filename='logo.jpg') }}" alt="Hard Times Cafe Logo" class="logo">
+          <div class="header-text">
+            <h1>Welcome to Hard Times Cafe</h1>
+            <p>Your comfort food destination!</p>
+          </div>
+        </div>
+    </header> 
+
+    <div class="nav-social-container">
+        <nav class="navbar">
+            <ul class="nav-links">
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('menu') }}">Menu</a></li>
+                <li><a href="{{ url_for('about') }}">About</a></li>
+            </ul>
+    
+            <div class="social-icons">
+                <a href="https://www.instagram.com/hardtimescafempls/?hl=en" target="_blank">
+                    <img src="{{ url_for('static', filename='ig_icon.png') }}" alt="Instagram" style="height: 40px;"></a>
+                <a href="https://www.facebook.com/hardtimescafe/" target="_blank">
+                    <img src="{{ url_for('static', filename='fb_icon.png') }}" alt="Facebook" style="height: 40px;"></a>
+            </div>
+        </nav>
+    </div>
+    <main>
+        <h1>Our Menu</h1>
+        <div class="categories">
+            <button class="button" onclick="window.location.href='/menu'">All</button>
+            {% for category in categories %}
+                <button class="button" onclick="window.location.href='/menu?category={{ category.category }}'" {% if selected_category == category.category %}class="active"{% endif %}>{{ category.category}}</button>
+            {% endfor %}
+        </div>
+        <div class="menu-items">
+            {% for item in menuItems %}
+            <div class="menu-item">
+                <h3>{{ item.name }}</h3>
+                <p>{{ item.description }}</p>
+                <p>Price: ${{ "%.2f" | format(item.price) }}</p>
+                <p>Dietary Considerations: {{ item.denotations }}</p>
+            </div>
+            {% endfor %}
+        </div>
+        <p style="text-align: center;">We are proud to support our local vendors: B&W Coffee, La Perla Tortillas, Whole Grain Milling, Bill's Imported Foods, Tempeh Tantrum, Frontier Herbs and Spices, and Co-op Partners Warehouse</p>
+        <p style="text-align: center;">A note on Pricing: All of our menu, bakery, and drink pricing includes tax. The price you see is the price you pay. Tips are gatefully accepted at the register when you pay or after you eat.</p>
+    </main>
+    <footer> <!-- Footer with copyright text -->
+        <p>&copy; 2025 Hard Times Cafe. All rights reserved.</p>
+    </footer>
+</body>
+</html>
