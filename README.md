@@ -8,5 +8,5 @@ To run:
         pip install flask flask-sqlalchemy
         pip install flask-WTF
 
-        then enter in terminal:
-            Python app.py
+then enter in terminal:
+            python app.py
