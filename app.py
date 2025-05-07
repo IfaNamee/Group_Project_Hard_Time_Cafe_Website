@@ -1,7 +1,7 @@
 # Import necessary modules from Flask and SQLAlchemy
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from flask_sqlalchemy import SQLAlchemy
-from flask_wtf.csrf import CSRFProtect 
+
 import os
 import uuid # generating order IDs
 
@@ -19,9 +19,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # Initialize SQLAlchemy with the Flask app
 db = SQLAlchemy(app)
 
-# --- Security Configuration ---
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-fallback-key') # required CSRF
-csrf = CSRFProtection(app) # initialize CSRF protection
 
 # --- Database Configuration ---
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://comments.db'
@@ -72,7 +69,7 @@ def checkout():
     return render_template('checkout.html')
 
 @app.route('/place_order', methods=['POST'])
-@csrf.exempt # only if using AJAX with CSRF token in header
+
 def place_order():
     try:
         # Get and validate data
