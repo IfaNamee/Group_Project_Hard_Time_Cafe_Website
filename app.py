@@ -1,9 +1,10 @@
 # Import necessary modules from Flask and SQLAlchemy
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from flask_sqlalchemy import SQLAlchemy
-from flask_wtf.csrf import CSRFProtect 
-import os
+import os 
+import stripe 
 import uuid # generating order IDs
+from datetime import datetime 
 
 # Initialize the Flask application
 app = Flask(__name__)
@@ -19,15 +20,13 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # Initialize SQLAlchemy with the Flask app
 db = SQLAlchemy(app)
 
-# --- Security Configuration ---
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-fallback-key') # required CSRF
-csrf = CSRFProtection(app) # initialize CSRF protection
+# stripe API keys
+stripe.api_key = 'your_stripe_secret_key_here'
 
-# --- Database Configuration ---
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://comments.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# SQLAlchemy config
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+db = SQLAlchemy(app)
 
-# --- Define Database Model ---
 
 # Create a Comment model representing each comment entry in the database
 class Comment(db.Model):
@@ -67,9 +66,6 @@ class orderDetails(db.Model):
     specialInstructions = db.Column(db.String(100))
     itemPrice = db.Column(db.Float)
 
-# Create all the tables defined by the model (only runs once at app start)
-with app.app_context():
-    db.create_all()
 
     db.session.query(menu_items).delete()
     db.session.commit()
@@ -314,7 +310,7 @@ def menu():
 
 # Route for the About page (supports both GET and POST)
 @app.route('/about', methods=['GET', 'POST'])
-@csrf.exempt
+
 def about():
     if request.method == 'POST':
         # Get the comment text submitted by the user
@@ -339,13 +335,43 @@ def checkout():
     return render_template('checkout.html')
 
 @app.route('/place_order', methods=['POST'])
-
 def place_order():
     try:
         # Get and validate data
         data = request.get_json()
-        if not data:
+        if not data or 'cart' not in data:
             return jsonify({'success': False, 'error': 'No data received'}), 400
+        
+        # create new order
+        new_order = orders(
+            totalPrice=sum(item['price'] * item['quantity'] for item in data['cart'])
+        )
+        db.session.add(new_order)
+        db.session.commit()
+
+        # Add order details
+        for item in data['cart']:
+            menu_item = menu_items.query.get(item['id'])
+            if menu_item:
+                order_detail = orderDetails(
+                    itemId=item['id'],
+                    specialOrderId=new_order.orderId,
+                    quantity=item['quantity'],
+                    itemPrice=item['price']
+                )
+                db.session.add(order_detail)
+
+            db.session.commit()
+
+            return jsonify({
+                'success': True,
+                'order_id': new_order.orderId,
+                'redirect': url_for('order_confirmation')
+            })
+        
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'success': False, 'error': str(e)}), 500
         
         # validate required fields
         required = ['cart', 'payment', 'address']
@@ -362,8 +388,6 @@ def place_order():
             'redirect': url_for('order_confirmation')
         })
     
-    except Exception as e:
-        return jsonify({'success': False, 'error': str(e)}), 500
 
 @app.route('/order_confirmation')
 def order_confirmation():

@@ -30,13 +30,37 @@ document.addEventListener('DOMContentLoaded', function() {
         clone.querySelector('.item-price').textContent =
             `$${(item.price * item.quantity).toFixed(2)}`;
         // set the item ID on the remove button for identification
-        clone.querySelector('.remove-btn').dataset.id = item.id;
+        const removeBtn = clone.querySelector('.remove-btn');
+        removeBtn.dataset.id = item.id;
 
-        cartItemsEl.appendChild(clone); // add populated item to the cart display
+        
+    
+    // attach event directly to remove button for dynamic removal
+    removeBtn.addEventListener('click', function () {
+        const itemId = this.dataset.id;
+        const updatedCart = cart.filter(item => item.id != itemId);
+        localStorage.setItem('cart', JSON.stringify(updatedCart));
+
+        this.closest('.cart-item').remove(); 
+
+        // update totals dynamically
+        const newSubtotal = updatedCart.reduce((acc, curr) => acc + curr.price * curr.quantity, 0);
+        document.getElementById('subtotal').textContent = `$${newSubtotal.toFixed(2)}`;
+        document.getElementById('total').textContent = `$${(newSubtotal + deliveryFee).toFixed(2)}`;
+        document.getElementById('final-total').textContent = (newSubtotal + deliveryFee).toFixed(2);
+
+        if (updatedCart.length === 0) {
+            document.getElementById('empty-cart-message').classList.remove('hidden');
+            document.getElementById('cart-items').innerHTML = '';
+        }
     });
 
+    cartItemsEl.appendChild(clone); // add populated item to the cart display
+
+});
+
     // Calculate totals
-    const deliveryFee = 3.99; // set delivery fee (make dynamic later)
+    const deliveryFee = parseFloat(document.getElementById('delivery-fee')?.textContent || '3.99');
     // display subtotal (format two decimal places)
     document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
     // calculate and display total
@@ -44,16 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // update order btn with final total
     document.getElementById('final-total').textContent = (subtotal + deliveryFee).toFixed(2);
 
-    // Remove item functionality
-    // add click handlers to all remove buttons
-    document.querySelectorAll('.remove-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const itemId = this.dataset.id; // get ID of item to remove
-            const updatedCart = cart.filter(item => item.id != itemId); // filter out removed item from cart array
-            localStorage.setItem('cart', JSON.stringify(updatedCart)); // save updated cart back to localStorage
-            location.reload(); // refresh to show updated cart
-            });
-        });
+
 
     } catch (error) {
         console.error('There was an error processing the cart:', error);
@@ -73,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // loading state
-        const calculateBtn = document.getElementById('calculate-time');
+        const calculateBtn = this;
         calculateBtn.disabled = true;
         calculateBtn.textContent = 'Calculating...';
 
@@ -98,42 +113,97 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 1500);
     });
 
-    // Form submission
+    // FORM SUBMISSION
     document.getElementById('checkout-form').addEventListener('submit', function(e) {
         e.preventDefault();
 
-        // validation
-        const cardNumber = document.getElementById('card-number').value.replace(/\s/g, '');
-        const expiry = document.getElementById('card-expiry').value;
-        const cvv = document.getElementById('card-cvv').value
-
-        if (!/^\d{16}$/.test(cardNumber)) {
-            alert('Please enter a valid 16-digit card number');
+        // Prevent checkoutif cart is empty
+        if (cart.length === 0) {
+            alert('Your cart is empty.');
             return;
         }
 
-        // Check expiry date
-        if (!/^\d{2}\/\d{2}$/.test(expiry)) {
-            alert('Please enter expiry date in MM/YY format');
-            return;
-        }
+         // validation
+         const cardNumber = document.getElementById('card-number').value.replace(/\s/g, '');
+         const expiry = document.getElementById('card-expiry').value;
+         const cvv = document.getElementById('card-cvv').value
+ 
+         if (!/^\d{16}$/.test(cardNumber)) {
+             alert('Please enter a valid 16-digit card number');
+             return;
+         }
+ 
+         // Check expiry date
+         if (!/^\d{2}\/\d{2}$/.test(expiry)) {
+             alert('Please enter expiry date in MM/YY format');
+             return;
+         }
+ 
+         // check if expiry date is in the future
+         const [month, year] = expiry.split('/').map(n => parseInt(n, 10));
+         const now = new Date();
+         const expiryDate = new Date(`20${year}`, month);
+         if (expiryDate <= now) {
+             alert('Your card is expired');
+             return;
+         }
+ 
+         // Check CVV
+         if (!/^\d{3,4}$/.test(cvv)) {
+             alert('Please enter a valid CVV');
+             return;
+         }
 
-        // Check CVV
-        if (!/^\d{3,4}$/.test(cvv)) {
-            alert('Please enter a valid CVV');
-            return;
-        }
-
-        // show processing state
-        const submitBtn = document.querySelector('#checkout-form button[type="submit"]');
+        // show the processing state
+        const submitBtn = this.querySelector('button[type="submit"]');
         submitBtn.disabled = true;
-        submitBtn.textContent = 'Processing...';
+        submitBtn.textConent = 'Processing...';
+        document.getElementById('loading-overlay').classList.remove('hidden');
 
-        // Process order (simulated)
-        setTimeout(() => {
-            console.log('Order processed:', cart);
-            localStorage.removeItem('cart');
-            window.location.href = "/order-confirmation";
-        }, 2000);
+        // get delivery details
+        const deliveryDetails = {
+            address: document.getElementById('delivery-address').value,
+            instructions: document.getElementById('delivery-instructions').value
+        };
+
+        // prepare order data
+        const orderData = {
+            cart: cart,
+            payment: {
+                cardNumber: cardNumber,
+                expiry: expiry,
+                cvv: cvv
+            },
+            address: deliveryDetails
+        };
+
+        // send to server
+        fetch('/place_order', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(orderData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                localStorage.removeItem('cart');
+                window.location.href = data.redirect;
+            } else {
+                alert('Error ' + data.error);
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Place Order';
+                document.getElementById('loading-overlay').classList.add('hidden');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('There was an error processing your order');
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Place Order';
+            document.getElementById('loading-overlay').classList.add('hidden;');
+        });
     });
+
 });

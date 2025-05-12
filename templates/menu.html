@@ -49,6 +49,7 @@
                 <li><a href="{{ url_for('home') }}">Home</a></li>
                 <li><a href="{{ url_for('menu') }}">Menu</a></li>
                 <li><a href="{{ url_for('about') }}">About</a></li>
+                <li><a href="{{ url_for('checkout') }}">Cart (<span id="cart-counter">0</span></a></li> <!--checkout link (mike)-->
             </ul>
     
             <div class="social-icons">
@@ -73,7 +74,12 @@
                 <h3>{{ item.name }}</h3>
                 <p>{{ item.description }}</p>
                 <p>Price: ${{ "%.2f" | format(item.price) }}</p>
-                <p>Dietary Considerations: {{ item.denotations }}</p>
+                <p>Dietary Considerations: {{ item.denotations }}</p> 
+                <!-- add to add functionality - button (mike)-->
+                <button class="add-to-cart"
+                        data-id="{{ item.menuId }}"
+                        data-name="{{ item.name }}"
+                        data-price="{{ item.price }}"> Add to Cart </button>
             </div>
             {% endfor %}
         </div>

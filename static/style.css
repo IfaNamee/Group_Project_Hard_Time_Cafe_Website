@@ -243,6 +243,10 @@ footer {
     cursor: not-allowed;
   }
 
+  .add-to-cart {
+    
+  }
+
   /* Delivery Estimate */
   #delivery-result {
     margin-top: 1rem;
