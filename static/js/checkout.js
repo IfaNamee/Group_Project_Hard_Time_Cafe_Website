@@ -157,7 +157,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // show the processing state
         const submitBtn = this.querySelector('button[type="submit"]');
         submitBtn.disabled = true;
-        submitBtn.textConent = 'Processing...';
+        submitBtn.textContent = 'Processing...';
         document.getElementById('loading-overlay').classList.remove('hidden');
 
         // get delivery details
@@ -202,7 +202,7 @@ document.addEventListener('DOMContentLoaded', function() {
             alert('There was an error processing your order');
             submitBtn.disabled = false;
             submitBtn.textContent = 'Place Order';
-            document.getElementById('loading-overlay').classList.add('hidden;');
+            document.getElementById('loading-overlay').classList.add('hidden');
         });
     });
 

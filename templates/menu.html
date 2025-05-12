@@ -49,7 +49,7 @@
                 <li><a href="{{ url_for('home') }}">Home</a></li>
                 <li><a href="{{ url_for('menu') }}">Menu</a></li>
                 <li><a href="{{ url_for('about') }}">About</a></li>
-                <li><a href="{{ url_for('checkout') }}">Cart (<span id="cart-counter">0</span></a></li> <!--checkout link (mike)-->
+                <li><a href="{{ url_for('checkout') }}">Cart (<span id="cart-counter">0</span>)</a></li>
             </ul>
     
             <div class="social-icons">
@@ -89,5 +89,6 @@
     <footer> <!-- Footer with copyright text -->
         <p>&copy; 2025 Hard Times Cafe. All rights reserved.</p>
     </footer>
+    <script src="{{ url_for('static', filename='js/menu.js') }}"></script>
 </body>
 </html>

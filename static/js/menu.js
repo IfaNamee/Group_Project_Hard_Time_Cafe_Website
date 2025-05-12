@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.add-to-cart').forEach(button => {
         button.addEventListener('click', function() {
             const item = {
-                id: this.dataset.id,
+                id: parseInt(this.dataset.id, 10),
                 name: this.dataset.name,
                 price: parseFloat(this.dataset.price),
                 quantity: 1
