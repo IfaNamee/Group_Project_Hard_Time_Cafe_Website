@@ -59,7 +59,7 @@ def menu():
         menuItems = menu_items.query.all()
     else:
         menuItems = menu_items.query.filter_by(category=category).all()
-    categories = db.session.query(menu_items.category).distinct().all()
+    categories = db.session.query(menu_items.category).distinct().order_by(menu_items.category).all()
     return render_template('menu.html', menuItems=menuItems, categories=categories, selected_category=category)
 
 @app.route('/about', methods=['GET', 'POST'])

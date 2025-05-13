@@ -4,16 +4,22 @@ document.addEventListener('DOMContentLoaded', function() {
     // retrieve cart data from localStorage or default to empty array if none exists
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
 
+    // if cart empty - redirect to cart page
+    if (cart.length === 0) {
+        window.location.href = "/cart";
+        return; // stop execution
+    }
+
     // Get reference to the cart items container in the HTML
     const cartItemsEl = document.getElementById('cart-items');
     // get reference to the hidden template for cart items
     const template = document.getElementById('cart-item-template');
 
     // Show empty message if no items
-    if (cart.length === 0) {
-    document.getElementById('empty-cart-message').classList.remove('hidden');
-    return;
-    }
+    //if (cart.length === 0) {
+    //document.getElementById('empty-cart-message').classList.remove('hidden');
+    //return;
+    //}
 
     // Render each cart item
     try {
@@ -50,8 +56,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('final-total').textContent = (newSubtotal + deliveryFee).toFixed(2);
 
         if (updatedCart.length === 0) {
-            document.getElementById('empty-cart-message').classList.remove('hidden');
-            document.getElementById('cart-items').innerHTML = '';
+            window.location.href = '/cart'; // redirect to cart page if empty after removal
         }
     });
 
@@ -152,6 +157,12 @@ document.addEventListener('DOMContentLoaded', function() {
          if (!/^\d{3,4}$/.test(cvv)) {
              alert('Please enter a valid CVV');
              return;
+         }
+
+         // check month
+         if (month < 1 || month > 12) {
+            alert("Please enter a valid expiry mmonth between 1-12");
+            return;
          }
 
         // show the processing state

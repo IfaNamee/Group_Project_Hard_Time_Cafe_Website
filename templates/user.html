@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Account</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/menu">Menu</a>
+        <a href="/user.html">User Account</a>
+    </nav>
+
+    <main class="user-container">
+        <h1>User Account</h1>
+
+        <form id="user-form">
+            <label>
+                Username:
+                <input type="text" id="username" required>
+            </label>
+
+            <label>
+                Password:
+                <input type="password" id="password" required>
+            </label>
+
+            <label>
+                Upload Profile Picutre:
+                <input type="file" id="profile-pic" accept="image/">
+            </label>
+
+            <label>
+                Save Address:
+                <textarea id="saved-address" rows="3"></textarea>
+            </label>
+
+            <label>
+                Card Number:
+                <input type="text" id="saved-card" maxlength="16">
+            </label>
+            <label>
+                Expiry (MM/YY):
+                <input type="text" id="saved-expiry">
+            </label>
+            <label>
+                CVV:
+                <input type="text" id="saved-cvv">
+            </label>
+
+            <button type="submit">Save Account Info</button>
+        </form>
+
+        <div class="saved-cart-info">
+            <h2>Your Saved Cart</h2>
+            <button id="load-saved-cart">Load Saved Cart</button>
+            <ul id="saved-cart-list"></ul>
+        </div>
+    </main>
+
+    <script src="user.js"></script>
+
+</body>
+</html>
