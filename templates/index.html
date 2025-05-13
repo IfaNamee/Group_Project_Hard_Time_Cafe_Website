@@ -23,6 +23,7 @@
                 <li><a href="{{ url_for('home') }}">Home</a></li>
                 <li><a href="{{ url_for('menu') }}">Menu</a></li>
                 <li><a href="{{ url_for('about') }}">About</a></li>
+                <li><a id="profile-link" href="/user.html"></a>User Profile</li>
             </ul>
     
             <div class="social-icons">
@@ -88,5 +89,20 @@
     <footer>
         <p>&copy; 2025 Hard Times Cafe. All rights reserved.</p>
     </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const profileLink = document.getElementById('profile-link');
+            const user = JSON.parse(localStorage.getItem('userAccount'));
+
+            if (user?.username) {
+                profileLink.textContent = user.username + "'s Profile";
+            } else {
+                profileLink.textContent = "Profile"
+            }
+        });
+
+    </script>
+    
 </body>
 </html>
