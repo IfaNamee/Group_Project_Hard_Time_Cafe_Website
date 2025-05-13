@@ -78,6 +78,10 @@ def about():
 def checkout():
     return render_template('checkout.html')
 
+@app.route('/user')
+def user():
+    return render_template('user.html')
+
 @app.route('/place_order', methods=['POST'])
 def place_order():
     try:
