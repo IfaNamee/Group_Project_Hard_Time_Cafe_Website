@@ -12,6 +12,7 @@ class FlaskAppTests(unittest.TestCase):
         response = self.app.get('/')
         self.assertEqual(response.status_code, 200)
     
+    #test menu items
     def test_seed_menu_items(self):
         category = request.args.get('category')
         allCategories = menu_items.query.filter_by(category=category).all()
