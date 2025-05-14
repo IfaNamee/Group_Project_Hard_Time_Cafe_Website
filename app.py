@@ -331,13 +331,7 @@ def seed_menu_items():
             price=10.00,denotations='vegan',category='Breakfast')
         ]
 
-    db.session.add_all(Sandwiches)
-    db.session.add_all(Platters)
-    db.session.add_all(smallPlates)
-    db.session.add_all(shortOrder)
-    db.session.add_all(Soups)
-    db.session.add_all(Salads)
-    db.session.add_all(Breakfast)
+    db.session.add_all(Sandwiches + Platters + smallPlates + shortOrder + Soups + Salads + Breakfast)
     db.session.commit()
     print("Menu seeded successfully.")
 
