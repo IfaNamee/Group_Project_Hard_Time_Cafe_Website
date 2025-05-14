@@ -9,11 +9,11 @@
 
     <header>
         <div class="header-container">
-          <img src="{{ url_for('static', filename='logo.jpg') }}" alt="Hard Times Cafe Logo" class="logo">
-          <div class="header-text">
-            <h1>Welcome to Hard Times Cafe</h1>
-            <p>Your comfort food destination!</p>
-          </div>
+            <img src="{{ url_for('static', filename='logo.jpg') }}" alt="Hard Times Cafe Logo" class="logo">
+            <div class="header-text">
+                <h1>Welcome to Hard Times Cafe</h1>
+                <p>Your comfort food destination!</p>
+            </div>
         </div>
     </header>  
 
@@ -23,86 +23,90 @@
                 <li><a href="{{ url_for('home') }}">Home</a></li>
                 <li><a href="{{ url_for('menu') }}">Menu</a></li>
                 <li><a href="{{ url_for('about') }}">About</a></li>
-                <li><a href="/checkout">Checkout</a></li>
+                <li><a href="{{ url_for('checkout') }}">Cart(<span id="cart-counter">0</span>)</a></li>
                 <li><a href="/user">Profile</a></li>
             </ul>
-    
+
             <div class="social-icons">
                 <a href="https://www.instagram.com/hardtimescafempls/?hl=en" target="_blank">
-                    <img src="{{ url_for('static', filename='ig_icon.png') }}" alt="Instagram" style="height: 40px;"></a>
+                    <img src="{{ url_for('static', filename='ig_icon.png') }}" alt="Instagram" style="height: 40px;">
+                </a>
                 <a href="https://www.facebook.com/hardtimescafe/" target="_blank">
-                    <img src="{{ url_for('static', filename='fb_icon.png') }}" alt="Facebook" style="height: 40px;"></a>
+                    <img src="{{ url_for('static', filename='fb_icon.png') }}" alt="Facebook" style="height: 40px;">
+                </a>
             </div>
         </nav>
     </div>    
 
-    <main>
-        <!--Main image for the webpage.  Might make smaller later-->
-        <img src="{{ url_for('static', filename='HTC.jpg') }}" alt="Hard Times Cafe Logo" class="main-image">
-        <!--Brief description. TODO make longer-->
+    <main style="background: linear-gradient(to right, #e0f7fa, #80deea); padding: 30px; border-radius: 10px; width: 80%; max-width: 1200px; margin: 30px auto; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);">
+        <!-- Main image for the webpage -->
+        <img src="{{ url_for('static', filename='HTC.jpg') }}" alt="Hard Times Cafe" class="main-image" style="width: 100%; max-height: 400px; object-fit: cover; border-radius: 8px; margin-bottom: 20px;">
+
         <p style="text-align: center">Serving fair trade coffee and vegan/vegetarian food since 1992. Cash only.</p>
-        <!--Carousel of various images of the cafe-->
-        <div class="carousel">
-            <!--Contains left and right arrows to cycle through images.  Also cycles on its own-->
-            <button class="arrow left" onclick="prevImage()">&#8592;</button>
-            <img id="carouselImage" src="{{ url_for('static', filename='house-image.jpg') }}" alt="carousel image">
-            <button class="arrow right" onclick="nextImage()">&#8594;</button>
-          </div>
-          <!--TODO add more information on the bottom page-->
+
+        <!-- Carousel of various images of the cafe -->
+        <div class="carousel" style="display: flex; align-items: center; justify-content: center; gap: 10px; margin: 20px 0;">
+            <button class="arrow left" onclick="prevImage()" style="background-color: transparent; border: none; cursor: pointer; font-size: 30px;">&#8592;</button>
+            <img id="carouselImage" src="{{ url_for('static', filename='house-image.jpg') }}" alt="carousel image"
+                style="width: 100%; max-width: 600px; height: 350px; object-fit: cover; border-radius: 8px;">
+            <button class="arrow right" onclick="nextImage()" style="background-color: transparent; border: none; cursor: pointer; font-size: 30px;">&#8594;</button>
+        </div>
+
         <p style="text-align: left;">Hours of Operation:</p>
         <p style="text-align: left;">8:00 AM - 12:00 AM Every Day</p>
     </main>
-    <script>
-        //Loads the first image whenever the webpage is loaded
-        window.onload = () => {
-            showImage(0);
-        };
-        //Images our carousel uses
-        const images = [
-        "{{ url_for('static', filename='house-image.jpg') }}",
-        "{{ url_for('static', filename='fairtrade_coffee.jpg') }}",
-        "{{ url_for('static', filename='dining-area.jpg') }}"
-        ];
-        let currentIndex = 0;
-        //Current image being used
-        function showImage(index) {
-            const imgElement = document.getElementById("carouselImage");
-            imgElement.src = images[index];
-        }
-        //Gives function to back button
-        function prevImage() {
-            currentIndex = (currentIndex - 1 + images.length) % images.length;
-            showImage(currentIndex);
-        }
-        //Gives function to forward button
-        function nextImage() {
-            currentIndex = (currentIndex + 1) % images.length;
-            showImage(currentIndex);
-        }
-        // Change image every 3 seconds
-        window.onload = () => {
-        showImage(currentIndex);
-        setInterval(() => {
-            nextImage();
-        }, 3000);
-    };
-    </script>
+
     <footer>
         <p>&copy; 2025 Hard Times Cafe. All rights reserved.</p>
     </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const profileLink = document.getElementById('profile-link');
-            const user = JSON.parse(localStorage.getItem('userAccount'));
+        // Initialize image array for carousel
+        const images = [
+            "{{ url_for('static', filename='house-image.jpg') }}",
+            "{{ url_for('static', filename='fairtrade_coffee.jpg') }}",
+            "{{ url_for('static', filename='dining-area.jpg') }}"
+        ];
+        let currentIndex = 0;
 
-            if (user?.username) {
-                profileLink.textContent = user.username + "'s Profile";
-            } else {
-                profileLink.textContent = "Profile"
+        // Function to show the image based on index
+        function showImage(index) {
+            const imgElement = document.getElementById("carouselImage");
+            imgElement.src = images[index];
+        }
+
+        // Function to go to the previous image
+        function prevImage() {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            showImage(currentIndex);
+        }
+
+        // Function to go to the next image
+        function nextImage() {
+            currentIndex = (currentIndex + 1) % images.length;
+            showImage(currentIndex);
+        }
+
+        // Automatically rotate images every 3 seconds
+        window.onload = () => {
+            showImage(currentIndex);
+            setInterval(() => {
+                nextImage();
+            }, 3000);
+        };
+    </script>
+
+    <!-- JS: Update cart counter -->
+    <script>
+        function updateCartCounter() {
+            const cart = JSON.parse(localStorage.getItem("cart")) || {};
+            let totalCount = 0;
+            for (let id in cart) {
+                totalCount += cart[id].quantity || 1;
             }
-        });
-
+            document.getElementById("cart-counter").textContent = totalCount;
+        }
+        document.addEventListener("DOMContentLoaded", updateCartCounter);
     </script>
 
 </body>

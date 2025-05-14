@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', function() {
     // Add to cart functionality
     document.querySelectorAll('.add-to-cart').forEach(button => {
@@ -8,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 price: parseFloat(this.dataset.price),
                 quantity: 1
             };
+
             // get or create cart
             let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
@@ -18,11 +20,15 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 cart.push(item);
             }
+
             // save to localStorage
             localStorage.setItem('cart', JSON.stringify(cart));
+
+            // update the cart counter
+            updateCartCounter();
+
             // show confirmation 
             alert(`${item.name} added to cart!`);
-            
         });
     });
 
@@ -33,12 +39,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const counter = document.getElementById('cart-counter');
         if (counter) {
             counter.textContent = totalItems;
-            counter.style.display = totalItems > 0 ? 'block' : 'none';
+            counter.style.display = totalItems > 0 ? 'line' : 'none';
         }
     }
 
     // update counter on page load
     updateCartCounter();
-
-
-})
+});

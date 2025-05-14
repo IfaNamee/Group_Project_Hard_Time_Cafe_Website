@@ -12,7 +12,7 @@
             padding: 0; /* Removes default padding */
         }
 
-        .menu-item{
+        .menu-item {
             grid-column: span 2; /* Makes the header span across both columns */
             text-align: center; /* Centers the text */
             margin-bottom: 20px; /* Adds space below the header */
@@ -22,24 +22,43 @@
             border-radius: 10px; /* Rounds the corners of the border */
         }
 
-        .button{
+        .button {
             padding: 15px 32px;
             background-color: #a77171;
             margin-bottom: 20px;
         }
 
-        
-        
+        /* New CSS for side-by-side boxes */
+        .info-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            margin: 20px;
+        }
+
+        .info-box {
+            flex: 1;
+            padding: 20px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-box p {
+            margin: 0;
+        }
+
     </style>
 </head>
 <body>
     <header>
         <div class="header-container">
-          <img src="{{ url_for('static', filename='logo.jpg') }}" alt="Hard Times Cafe Logo" class="logo">
-          <div class="header-text">
-            <h1>Welcome to Hard Times Cafe</h1>
-            <p>Your comfort food destination!</p>
-          </div>
+            <img src="{{ url_for('static', filename='logo.jpg') }}" alt="Hard Times Cafe Logo" class="logo">
+            <div class="header-text">
+                <h1>Welcome to Hard Times Cafe</h1>
+                <p>Your comfort food destination!</p>
+            </div>
         </div>
     </header> 
 
@@ -49,18 +68,21 @@
                 <li><a href="{{ url_for('home') }}">Home</a></li>
                 <li><a href="{{ url_for('menu') }}">Menu</a></li>
                 <li><a href="{{ url_for('about') }}">About</a></li>
-                <li><a href="{{ url_for('checkout') }}">Cart (<span id="cart-counter">0</span>)</a></li>
+                <li><a href="{{ url_for('checkout') }}">Cart(<span id="cart-counter">0</span>)</a></li>
                 <li><a href="/user">Profile</a></li>
             </ul>
-    
+
             <div class="social-icons">
                 <a href="https://www.instagram.com/hardtimescafempls/?hl=en" target="_blank">
-                    <img src="{{ url_for('static', filename='ig_icon.png') }}" alt="Instagram" style="height: 40px;"></a>
+                    <img src="{{ url_for('static', filename='ig_icon.png') }}" alt="Instagram" style="height: 40px;">
+                </a>
                 <a href="https://www.facebook.com/hardtimescafe/" target="_blank">
-                    <img src="{{ url_for('static', filename='fb_icon.png') }}" alt="Facebook" style="height: 40px;"></a>
+                    <img src="{{ url_for('static', filename='fb_icon.png') }}" alt="Facebook" style="height: 40px;">
+                </a>
             </div>
         </nav>
-    </div>
+    </div>  
+
     <main>
         <h1>Our Menu</h1>
         <div class="categories">
@@ -69,6 +91,7 @@
                 <button class="button" onclick="window.location.href='/menu?category={{ category.category }}'" {% if selected_category == category.category %}class="active"{% endif %}>{{ category.category}}</button>
             {% endfor %}
         </div>
+
         <div class="menu-items">
             {% for item in menuItems %}
             <div class="menu-item">
@@ -76,7 +99,7 @@
                 <p>{{ item.description }}</p>
                 <p>Price: ${{ "%.2f" | format(item.price) }}</p>
                 <p>Dietary Considerations: {{ item.denotations }}</p> 
-                <!-- add to add functionality - button (mike)-->
+                <!-- Add to cart button -->
                 <button class="add-to-cart"
                         data-id="{{ item.menuId }}"
                         data-name="{{ item.name }}"
@@ -84,12 +107,22 @@
             </div>
             {% endfor %}
         </div>
-        <p style="text-align: center;">We are proud to support our local vendors: B&W Coffee, La Perla Tortillas, Whole Grain Milling, Bill's Imported Foods, Tempeh Tantrum, Frontier Herbs and Spices, and Co-op Partners Warehouse</p>
-        <p style="text-align: center;">A note on Pricing: All of our menu, bakery, and drink pricing includes tax. The price you see is the price you pay. Tips are gatefully accepted at the register when you pay or after you eat.</p>
+
+        <!-- Updated Info Section -->
+        <div class="info-container">
+            <div class="info-box">
+                <p>We are proud to support our local vendors: B&W Coffee, La Perla Tortillas, Whole Grain Milling, Bill's Imported Foods, Tempeh Tantrum, Frontier Herbs and Spices, and Co-op Partners Warehouse.</p>
+            </div>
+            <div class="info-box">
+                <p>A note on Pricing: All of our menu, bakery, and drink pricing includes tax. The price you see is the price you pay. Tips are gratefully accepted at the register when you pay or after you eat.</p>
+            </div>
+        </div>
     </main>
-    <footer> <!-- Footer with copyright text -->
+
+    <footer>
         <p>&copy; 2025 Hard Times Cafe. All rights reserved.</p>
     </footer>
+
     <script src="{{ url_for('static', filename='js/menu.js') }}"></script>
 </body>
 </html>

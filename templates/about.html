@@ -77,7 +77,7 @@
                 <li><a href="{{ url_for('home') }}">Home</a></li>
                 <li><a href="{{ url_for('menu') }}">Menu</a></li>
                 <li><a href="{{ url_for('about') }}">About</a></li>
-                <li><a href="/checkout">Checkout</a></li>
+                <li><a href="{{ url_for('checkout') }}">Cart(<span id="cart-counter">0</span>)</a></li>
                 <li><a href="/user">Profile</a></li>
             </ul>
     
@@ -169,6 +169,19 @@
                 input.value = ""; // Clear input
             }
         });
+    </script>
+
+    <!-- JS: Update cart counter -->
+    <script>
+        function updateCartCounter() {
+            const cart = JSON.parse(localStorage.getItem("cart")) || {};
+            let totalCount = 0;
+            for (let id in cart) {
+                totalCount += cart[id].quantity || 1;
+            }
+            document.getElementById("cart-counter").textContent = totalCount;
+        }
+        document.addEventListener("DOMContentLoaded", updateCartCounter);
     </script>
 
 </body>

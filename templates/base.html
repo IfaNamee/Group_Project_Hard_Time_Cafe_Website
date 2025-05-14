@@ -6,51 +6,65 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Main CSS -->
-
-    <!-- Bootstrap (optional for layout/helpful styles) -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
     {% block head %}{% endblock %}
+    
 </head>
 <body>
 
     <header>
         <div class="header-container">
-          <img src="{{ url_for('static', filename='logo.jpg') }}" alt="Hard Times Cafe Logo" class="logo">
-          <div class="header-text">
-            <h1>Welcome to Hard Times Cafe</h1>
-            <p>Your comfort food destination!</p>
-          </div>
+            <img src="{{ url_for('static', filename='logo.jpg') }}" alt="Hard Times Cafe Logo" class="logo">
+            <div class="header-text">
+                <h1>Welcome to Hard Times Cafe</h1>
+                <p>Your comfort food destination!</p>
+            </div>
         </div>
     </header>  
 
+    <!-- Navigation Bar with Cart Counter -->
     <div class="nav-social-container">
         <nav class="navbar">
             <ul class="nav-links">
                 <li><a href="{{ url_for('home') }}">Home</a></li>
                 <li><a href="{{ url_for('menu') }}">Menu</a></li>
                 <li><a href="{{ url_for('about') }}">About</a></li>
-                <li><a href="/checkout">Checkout</a></li>
+                <li><a href="{{ url_for('checkout') }}">Cart(<span id="cart-counter">0</span>)</a></li>
                 <li><a href="/user">Profile</a></li>
             </ul>
-    
+
             <div class="social-icons">
                 <a href="https://www.instagram.com/hardtimescafempls/?hl=en" target="_blank">
-                    <img src="{{ url_for('static', filename='ig_icon.png') }}" alt="Instagram" style="height: 40px;"></a>
+                    <img src="{{ url_for('static', filename='ig_icon.png') }}" alt="Instagram" style="height: 40px;">
+                </a>
                 <a href="https://www.facebook.com/hardtimescafe/" target="_blank">
-                    <img src="{{ url_for('static', filename='fb_icon.png') }}" alt="Facebook" style="height: 40px;"></a>
+                    <img src="{{ url_for('static', filename='fb_icon.png') }}" alt="Facebook" style="height: 40px;">
+                </a>
             </div>
         </nav>
     </div>
 
+    <!-- Page-Specific Content -->
     <main class="container mb-5">
         {% block content %}{% endblock %}
     </main>
 
-    <footer class="text-center py-4 bg-light">
+    <!-- Footer -->
+    <footer>
         <p>&copy; 2025 Hard Times Cafe. All rights reserved.</p>
     </footer>
+
+    <!-- JS: Update cart counter -->
+    <script>
+        function updateCartCounter() {
+            const cart = JSON.parse(localStorage.getItem("cart")) || {};
+            let totalCount = 0;
+            for (let id in cart) {
+                totalCount += cart[id].quantity || 1;
+            }
+            document.getElementById("cart-counter").textContent = totalCount;
+        }
+        document.addEventListener("DOMContentLoaded", updateCartCounter);
+    </script>
 
 </body>
 </html>

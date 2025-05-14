@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const loadBtn = document.getElementById('load-saved-cart');
     const savedCartList = document.getElementById('saved-cart-list');
 
-    // load existing data
+    // Load existing user data
     const existingUser = JSON.parse(localStorage.getItem('userAccount')) || {};
     if (existingUser.username) {
         document.getElementById('username').value = existingUser.username;
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
         form.prepend(img);
     }
 
-    // handle form submission
+    // Handle form submission
     form.addEventListener('submit', e => {
         e.preventDefault();
 
@@ -36,6 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 address: document.getElementById('saved-address').value,
                 cardNumber: document.getElementById('saved-card').value,
                 expiry: document.getElementById('saved-expiry').value,
+                cvv: document.getElementById('saved-cvv').value,
                 profilePic: profilePicData || existingUser.profilePic || null,
                 savedCart: JSON.parse(localStorage.getItem('cart')) || []
             };
@@ -54,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // LOAD SAVED CART
+    // Load saved cart items
     loadBtn.addEventListener('click', () => {
         const account = JSON.parse(localStorage.getItem('userAccount'));
         if (account?.savedCart?.length > 0) {
@@ -68,4 +69,17 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('No saved cart found!');
         }
     });
-}); 
+
+    // Update cart counter in navbar
+    const updateCartCounter = () => {
+        const cart = JSON.parse(localStorage.getItem('cart')) || {};
+        let totalCount = 0;
+        for (let id in cart) {
+            totalCount += cart[id].quantity || 1;
+        }
+        const counter = document.getElementById('cart-counter');
+        if (counter) counter.textContent = totalCount;
+    };
+
+    updateCartCounter();
+});
