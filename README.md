@@ -6,8 +6,8 @@ To run:
         python -m venv venv
         
         source venv/bin/activate
-        
-        pip install flask flask-sqlalchemy flask-WTF flask pytest
+        pip install flask flask-sqlalchemy
+        pip install flask-WTF
 
 then enter in terminal:
             python app.py
