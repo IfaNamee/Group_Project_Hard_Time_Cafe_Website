@@ -7,11 +7,16 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"
 </head>
 <body>
-    <nav>
-        <a href="/">Home</a>
-        <a href="/menu">Menu</a>
-        <a href="/user.html">User Account</a>
-    </nav>
+    <div class="nav-social-container">
+        <nav class="navbar">
+            <ul class="nav-links">
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('menu') }}">Menu</a></li>
+                <li><a href="{{ url_for('about') }}">About</a></li>
+                <li><a href="/checkout">Checkout</a></li>
+                <a href="/user.html">User Account</a>
+            </ul>
+        </nav>
 
     <main class="user-container">
         <h1>User Account</h1>
